@@ -97,7 +97,8 @@ in the collection and each image `j` in the `after` images.
 ```js
 var sign = function(i, j) { // i and j are images
   return ee.Image(j).neq(i) // Zero case
-      .multiply(ee.Image(j).subtract(i).clamp(-1, 1)).int();
+      .multiply(ee.Image(j).subtract(i).clamp(-1, 1)).int(); // If the initial value is near [-1,1], it needs to be multiplied by 10000
+// .multiply(ee.Image(j).subtract(i).multiply(10000).clamp(-1, 1)).int()
 };
 
 var kendall = ee.ImageCollection(joined.map(function(current) {
